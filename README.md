@@ -1,14 +1,21 @@
-# discord-irc [![Build status](https://ci.frigg.io/badges/reactiflux/discord-irc/)](https://ci.frigg.io/reactiflux/discord-irc/last/) [![Coverage status](https://ci.frigg.io/badges/coverage/reactiflux/discord-irc/)](https://ci.frigg.io/reactiflux/discord-irc/last/)
+# discord-irc [![Build Status](https://travis-ci.org/reactiflux/discord-irc.svg?branch=master)](https://travis-ci.org/reactiflux/discord-irc) [![Coverage Status](https://coveralls.io/repos/github/reactiflux/discord-irc/badge.svg?branch=master)](https://coveralls.io/github/reactiflux/discord-irc?branch=master)
 
 > Connects [Discord](https://discordapp.com/) and IRC channels by sending messages back and forth.
-
-A mostly feature complete port of [slack-irc](https://github.com/ekmartin/slack-irc).
 
 ## Example
 ![discord-irc](http://i.imgur.com/oI6iCrf.gif)
 
 ## Installation and usage
-Either by installing through npm:
+**Note**: discord-irc requires Node.js version 6 or newer, as it depends on [discord.js](https://github.com/hydrabolt/discord.js).
+
+Before you can run discord-irc you need to create a configuration file by
+following the instructions [here](https://github.com/reactiflux/discord-irc#configuration).
+After you've done that you can replace `/path/to/config.json` in the commands
+below with the path to your newly created configuration file - or just `config.json` if it's
+in the same directory as the one you're starting the bot from.
+
+When you've done that you can install and start the bot either through npm:
+
 ```bash
 $ npm install -g discord-irc
 $ discord-irc --config /path/to/config.json
@@ -19,6 +26,7 @@ or by cloning the repository:
 ```bash
 In the repository folder:
 $ npm install
+$ npm run build
 $ npm start -- --config /path/to/config.json # Note the extra double dash
 ```
 
@@ -56,21 +64,35 @@ First you need to create a Discord bot user, which you can do by following the i
       ["AUTH", "test", "password"]
     ],
     "channelMapping": { // Maps each Discord-channel to an IRC-channel, used to direct messages to the correct place
-      "#discord": "#irc channel-password" // Add channel keys after the channel name
+      "#discord": "#irc channel-password", // Add channel keys after the channel name
+      "1234567890": "#channel" // Use a discord channel ID instead of its name (so you can rename it or to disambiguate)
     },
     "ircOptions": { // Optional node-irc options
       "floodProtection": false, // On by default
       "floodProtectionDelay": 1000 // 500 by default
     },
+    "format": { // Optional custom formatting options
+      // Patterns, represented by {$patternName}, are replaced when sending messages
+      "commandPrelude": "Command sent by {$nickname}", // Message sent before a command
+      "ircText": "<{$displayUsername}> {$text}", // When sending a message to IRC
+      "urlAttachment": "<{$displayUsername}> {$attachmentURL}", // When sending a Discord attachment to IRC
+      "discord": "**<{$author}>** {$withMentions}" // When sending a message to Discord
+      // Other patterns that can be used:
+      // {$discordChannel} (e.g. #general)
+      // {$ircChannel} (e.g. #irc)
+    },
     "ircNickColor": false, // Gives usernames a color in IRC for better readability (on by default)
     // Makes the bot hide the username prefix for messages that start
     // with one of these characters (commands):
-    "commandCharacters": ["!", "."]
+    "commandCharacters": ["!", "."],
+    "ircStatusNotices": true // Enables notifications in Discord when people join/part in the relevant IRC channel
   }
 ]
 ```
 
 The `ircOptions` object is passed directly to node-irc ([available options](http://node-irc.readthedocs.org/en/latest/API.html#irc.Client)).
+
+To retrieve a discord channel ID, write `\#channel` on the relevant server – it should produce something of the form `<#1234567890>`, which you can then use in the `channelMapping` config.
 
 ## Tests
 Run the tests with:
@@ -79,24 +101,9 @@ $ npm test
 ```
 
 ## Style Guide
-discord-irc uses a slightly modified version of the
-[Airbnb Style Guide](https://github.com/airbnb/javascript/tree/master/es5).
+discord-irc follows the [Airbnb Style Guide](https://github.com/airbnb/javascript).
 [ESLint](http://eslint.org/) is used to make sure this is followed correctly, which can be run with:
 
 ```bash
 $ npm run lint
 ```
-
-The deviations from the Airbnb Style Guide can be seen in  the [.eslintrc](.eslintrc) file.
-
-## License
-
-(The MIT License)
-
-Copyright (c) 2016 Martin Ek <mail@ekmartin.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

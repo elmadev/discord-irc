@@ -1,6 +1,136 @@
 # Changelog
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.0] - 2017-07-01
+This project now uses [irc-upd](https://github.com/Throne3d/node-irc) as a dependency, instead of the old [irc](https://github.com/martynsmith/node-irc) package – this fork should be better maintained and will solve some bugs, detailed below.
+
+### Added
+* Allow commandCharacters to work for messages sent to Discord - [#221](https://github.com/reactiflux/discord-irc/pull/221).
+
+* Send nick changes from IRC to Discord with `ircStatusNotices` - [#235](https://github.com/reactiflux/discord-irc/pull/235), [#241](https://github.com/reactiflux/discord-irc/pull/241).
+
+* Translate custom emoji references from IRC to Discord - [#256](https://github.com/reactiflux/discord-irc/pull/256).
+
+### Fixed
+* Use `ircClient.nick` instead of `nickname` when checking if the `ircStatusNotices` event is for the bot, to prevent a potential crash - [#257](https://github.com/reactiflux/discord-irc/pull/257).
+
+* Use the updated `irc-upd` library instead of `irc`, causing IRC messages to now be split by byte instead of character (fixing [#199](https://github.com/reactiflux/discord-irc/issues/199)) and adding support for certain Unicode characters in nicknames (fixing [#200](https://github.com/reactiflux/discord-irc/issues/200)) - [#258](https://github.com/reactiflux/discord-irc/pull/258).
+
+* Update dependencies:
+
+  - discord.js to 11.1.0
+  - check-env to 1.3.0
+  - chai to ^4.0.2
+  - nyc to ^11.0.3
+  - commander to 2.10.0
+  - eslint to ^4.1.1
+
+## [2.3.3] - 2017-04-29
+### Fixed
+* Warn if a part/quit is received and no channelUsers is set -
+[#218](https://github.com/reactiflux/discord-irc/pull/218).
+
+## [2.3.2] - 2017-04-27
+### Fixed
+* Fix ircStatucNotices when channels are not lowercase -
+[#219](https://github.com/reactiflux/discord-irc/pull/219).
+
+## [2.3.1] - 2017-04-05
+### Fixed
+* Fix IRC quit messages sending to all channels by tracking users - [#214](https://github.com/reactiflux/discord-irc/pull/214#pullrequestreview-31156291).
+
+## [2.3.0] - 2017-04-03
+A huge thank you to [@Throne3d](https://github.com/Throne3d),
+[@rahatarmanahmed](https://github.com/rahatarmanahmed), [@mraof](https://github.com/mraof)
+and [@Ratismal](https://github.com/Ratismal) for all the fixes and features
+in this release.
+
+### Added
+* Bridge IRC join/part/quit messages to Discord
+(enable by setting ircStatusNotices to true) -
+[#207](https://github.com/reactiflux/discord-irc/pull/207).
+
+* Convert text styles between IRC and Discord
+[#205](https://github.com/reactiflux/discord-irc/pull/205).
+
+* Allow users to configure the patterns of messages on
+IRC and Discord using the format options object
+[#204](https://github.com/reactiflux/discord-irc/pull/204).
+
+* Add Discord channel ID matching  to the channel mapping
+[#202](https://github.com/reactiflux/discord-irc/pull/202).
+
+### Fixed
+* Parse role mentions appropriately, as with channel and user mentions
+[#203](https://github.com/reactiflux/discord-irc/pull/203).
+
+* Make the bot not crash when a channel mentioned by ID fails to exist
+[#201](https://github.com/reactiflux/discord-irc/pull/201).
+
+### Changed
+* Convert username mentions even if nickname is set -
+[#208](https://github.com/reactiflux/discord-irc/pull/208).
+
+## [2.2.1] - 2017-03-12
+### Fixed
+* Reverts the changes in 2.2.0 due to incompatibilities with different clients.
+See https://github.com/reactiflux/discord-irc/issues/196 for more
+information.
+
+## [2.2.0] - 2017-03-06
+### Fixed
+* Added a zero width character between each letter of the IRC nicknames, to
+avoid unwanted highlights. Fixed by @Sanqui in
+[#193](https://github.com/reactiflux/discord-irc/pull/193).
+
+## [2.1.6] - 2017-01-10
+### Fixed
+* Upgraded discord.js.
+
+## [2.1.6] - 2016-12-08
+### Fixed
+* Listen to warn events from Discord.
+* Listen to debug events from Discord (only in development).
+* Log info events upon connection, instead of debug
+
+## [2.1.5] - 2016-11-17
+### Fixed
+* Upgraded node-irc to 0.5.1, fixing #129.
+
+## [2.1.4] - 2016-11-14
+### Fixed
+* Added support for highlighting users by their nicknames,
+thanks to @DarkSpyro003.
+* Upgraded to discord.js v10.
+
+## [2.1.3] - 2016-11-02
+### Fixed
+* Send text messages only to text channels (thanks @dustinlacewell).
+
+## [2.1.2] - 2016-11-01
+### Fixed
+* Use nickname, not username, in command prelude.
+Thanks to @williamjacksn.
+
+## [2.1.1] - 2016-10-21
+### Fixed
+* A bug where Discord attachment URLs weren't posted to IRC, thanks to @LordAlderaan for the report.
+
+## [2.1.0] - 2016-10-09
+### Added
+* Messages sent to IRC will now use the correct server nickname,
+instead of the user's global username (thanks to @DarkSpyro003).
+
+## [2.0.2] - 2016-10-02
+### Fixed
+- Display custom emojis correctly, thanks to @macdja38.
+
+## [2.0.0] - 2016-09-25
+### Fixed
+- Upgrade to version 9.3 of discord.js.
+This removes support for Node.js versions older than v6,
+as that's the oldest discord.js supports.
+
 ## [1.0.3] - 2016-09-09
 ### Fixed
 - Replace changes in 1.0.2 with the #indev-old version
