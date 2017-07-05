@@ -1,0 +1,28 @@
+[
+  {
+    "nickname": "discord",
+    "server": "irc.atw-inter.net",
+    // "server": "irc.snt.utwente.nl",
+    "discordToken": "insertTokenHere",
+    "channelMapping": {
+      "207629806513160192": "#discord-general",
+      "228598206101979136": "#across",
+      "228619799251386368": "#irc_eol",
+      "219856312161402881": "#wc7",
+      "281461544762605568": "#fem2017",
+      "219841787454423040": "#discord-other-games",
+      "261581325750763520": "#discord-music",
+      "304865299520552960": "#discord-movies",
+      "296064768282984449": "#discord-sports",
+      "220952076266635264": "#discord-developers",
+      "283974540025921538": "#team_mie"
+    },
+    "format": {
+      "ircText": "<{$nickname}> {$text}",
+      "urlAttachment": "<{$nickname}> {$attachmentURL}",
+      "discord": "**<{$author}>** {$withMentions}"
+    },
+    "ircNickColor": false,
+    "commandCharacters": ["+"]
+  }
+]
