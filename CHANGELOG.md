@@ -1,6 +1,85 @@
 # Changelog
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.6.0] - 2018-03-22
+### Added
+* Support for posting messages to Discord using webhooks (thanks to
+  [Fiaxhs](https://github.com/reactiflux/discord-irc/pull/230)!).
+
+Webhooks lets you override nicknames and avatars, so messages coming from IRC
+can appear as regular Discord messages:
+
+![discord-webhook](http://i.imgur.com/lNeJIUI.jpg)
+
+To enable webhooks, follow part 1 of [this
+guide](https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks)
+to create and retrieve a webhook URL for a specific channel, then enable it in
+discord-irc's config as follows:
+
+```json
+  "webhooks": {
+    "#discord-channel": "https://discordapp.com/api/webhooks/id/token"
+  }
+```
+
+## [2.5.1] - 2018-01-18
+### Fixed
+* Upgraded dependencies.
+
+## [2.5.0] - 2017-10-27
+### Added
+* Support multi-character command prefixes - [#301](https://github.com/reactiflux/discord-irc/pull/301)
+
+* Enable auto-renicking by default, so the bot tries to get the target nickname after it fails - [#302](https://github.com/reactiflux/discord-irc/pull/302)
+
+* Add the ability to ignore IRC/Discord users by nickname - [#322](https://github.com/reactiflux/discord-irc/pull/322)
+
+### Fixed
+* Improve IRC → Discord mentions around non-word characters and nickname prefix matches - [#273](https://github.com/reactiflux/discord-irc/pull/273)
+
+* Default to UTF-8 encoding when bridging messages to prevent character corruption - [#315](https://github.com/reactiflux/discord-irc/pull/315)
+
+* Fix a crash when using the bot in a group DM - [#316](https://github.com/reactiflux/discord-irc/pull/316)
+
+* Use a `prepare` script for transpiling instead of `prepublish`, fixing `npm` installation direct from the GitHub repository - [#323](https://github.com/reactiflux/discord-irc/pull/323)
+
+* Update dependencies:
+
+  - discord.js to 11.2.1
+  - sinon to ^4.0.1
+  - irc-upd to 0.8.0 - [#313](https://github.com/reactiflux/discord-irc/pull/313)
+  - simple-markdown to ^0.3.1
+  - coveralls to ^3.0.0
+  - mocha to ^4.0.0
+  - winston to 2.4.0
+
+### Changed
+* Add a link to the IRC spec in the README - [#307](https://github.com/reactiflux/discord-irc/pull/307)
+
+* Drop testing for Node 7, add testing for Node 8 - [#329](https://github.com/reactiflux/discord-irc/pull/329)
+
+## [2.4.2] - 2017-08-21
+### Fixed
+* Tests: Use globbing instead of `find` so tests work on Windows - [#279](https://github.com/reactiflux/discord-irc/pull/279)
+
+### Changed
+* Update dependency irc-upd to [0.7.0](https://github.com/Throne3d/node-irc/releases/tag/v0.7.0) - [#284](https://github.com/reactiflux/discord-irc/pull/284)
+
+* Tests: Use Discord objects to simplify code - [#272](https://github.com/reactiflux/discord-irc/pull/272)
+
+## [2.4.1] - 2017-07-16
+### Added
+* Falsy command preludes are no longer sent (previously would choose default prelude) - [#260](https://github.com/reactiflux/discord-irc/pull/260)
+
+### Fixed
+* Update link to IRC library in README so it points to the new irc-upd library - [#264](https://github.com/reactiflux/discord-irc/pull/264)
+
+* Update dependency commander to 2.11.0 - [#262](https://github.com/reactiflux/discord-irc/pull/262)
+
+* Fix deprecation warning on `TextChannel#sendMessage` - [#267](https://github.com/reactiflux/discord-irc/pull/267)
+
+* Fix reconnection by updating dependency irc-upd to 0.6.2 - [#270](https://github.com/reactiflux/discord-irc/pull/270)
+
 ## [2.4.0] - 2017-07-01
 This project now uses [irc-upd](https://github.com/Throne3d/node-irc) as a dependency, instead of the old [irc](https://github.com/martynsmith/node-irc) package – this fork should be better maintained and will solve some bugs, detailed below.
 
